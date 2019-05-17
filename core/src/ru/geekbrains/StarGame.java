@@ -10,13 +10,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class StarGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+	Texture img2;
 	TextureRegion region;
+
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		region = new TextureRegion(img, 0, 25, 250, 100);
+		img2 = new Texture("Background.jpg");
 	}
 
 	@Override
@@ -26,8 +28,8 @@ public class StarGame extends ApplicationAdapter {
 		batch.begin();
 		batch.setColor(1f, 1f, 1f, 1f);
 		batch.draw(img, 150, 150);
-		batch.setColor(1f, 1f, 1f, 0.1f);
-		batch.draw(region, 50 , 100);
+		batch.setColor(1f, 1f, 1f, 0.5f);
+		batch.draw(img2, 0 , 0);
 		batch.end();
 	}
 	
