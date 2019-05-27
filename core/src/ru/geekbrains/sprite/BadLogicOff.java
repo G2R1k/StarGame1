@@ -8,14 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
 
-public class BadLogic extends Sprite {
+public class BadLogicOff extends Sprite {
 
     private static float LEN = 0.005f;
     private Vector2 v1;
     private Vector2 touch1;
     private Vector2 buf;
 
-    public BadLogic(TextureRegion region){
+    public BadLogicOff(TextureRegion region){
         super(region);
         regions[frame].getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         v1 = new Vector2();
