@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.sprite.Background;
+import ru.geekbrains.sprite.StarShip;
 import ru.geekbrains.sprite.Stars;
 
 public class GameScreen extends BaseScreen {
@@ -20,14 +21,16 @@ public class GameScreen extends BaseScreen {
     private Background background;
     private TextureAtlas atlas;
     private Stars[] stars;
+    private StarShip starShip;
 
     @Override
     public void show() {
         super.show();
         bg = new Texture("textures/Background2.jpg");
         background = new Background(new TextureRegion(bg));
-        atlas = new TextureAtlas("textures/testPack.atlas");
+        atlas = new TextureAtlas("textures/StarShip.atlas");
         stars = new Stars[STAR_COUNT];
+        starShip = new StarShip(atlas);
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Stars(atlas);
         }
@@ -43,6 +46,7 @@ public class GameScreen extends BaseScreen {
         for(Stars star : stars) {
             star.update(delta);
         }
+        starShip.update(delta);
     }
 
     private void draw(){
@@ -53,6 +57,7 @@ public class GameScreen extends BaseScreen {
         for(Stars star : stars) {
             star.draw(batch);
         }
+        starShip.draw(batch);
         batch.end();
     }
 
@@ -63,6 +68,7 @@ public class GameScreen extends BaseScreen {
         for(Stars star : stars) {
             star.resize(worldBounds);
         }
+        starShip.resize(worldBounds);
     }
 
     @Override
@@ -84,6 +90,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touchl, int pointer) {
+        starShip.touchDown(touchl, pointer);
         return super.touchDown(touchl, pointer);
     }
 

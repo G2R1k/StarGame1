@@ -14,7 +14,7 @@ public class ButtonPlay extends ScaleButton {
     public ButtonPlay(TextureAtlas atlas, Game game) {
         super(atlas.findRegion("play"));
         this.game = game;
-        setHeightProportion(0.2f);
+        setHeightProportion(0.15f);
     }
 
     @Override

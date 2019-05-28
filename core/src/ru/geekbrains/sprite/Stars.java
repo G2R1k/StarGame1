@@ -11,17 +11,25 @@ public class Stars extends Sprite {
 
     private Vector2 v;
     private Rect worldBounds;
+    private float height;
 
     public Stars(TextureAtlas atlas){
         super(atlas.findRegion("star2"));
         float vX = Rnd.nextFloat(-0.005f, 0.005f);
         float vY = Rnd.nextFloat(-0.1f, -0.3f);
         v = new Vector2(vX, vY);
-        setHeightProportion(0.01f);
+        height = Rnd.nextFloat(0.001f, 0.01f);
+        setHeightProportion(height);
     }
 
     @Override
     public void update(float delta) {
+        if(height >= 0.01f){
+            height = 0.005f;
+        } else {
+            height += 0.0001f;
+        }
+        setHeightProportion(height);
         pos.mulAdd(v, delta);
         if(getRight() < worldBounds.getLeft()){
             setLeft(worldBounds.getRight());
