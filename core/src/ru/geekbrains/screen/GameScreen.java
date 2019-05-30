@@ -28,7 +28,7 @@ public class GameScreen extends BaseScreen {
         super.show();
         bg = new Texture("textures/Background2.jpg");
         background = new Background(new TextureRegion(bg));
-        atlas = new TextureAtlas("textures/StarShip.atlas");
+        atlas = new TextureAtlas("textures/mainAtlas.atlas");
         stars = new Stars[STAR_COUNT];
         starShip = new StarShip(atlas);
         for (int i = 0; i < STAR_COUNT; i++) {

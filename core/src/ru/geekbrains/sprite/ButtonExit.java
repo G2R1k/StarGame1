@@ -15,7 +15,6 @@ public class ButtonExit extends ScaleButton {
 
     @Override
     public void resize(Rect worldBounds) {
-        setRight(worldBounds.getRight() - 0.03f);
         setBottom(worldBounds.getBottom() + 0.03f);
     }
 

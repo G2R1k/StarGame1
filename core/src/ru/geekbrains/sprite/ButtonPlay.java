@@ -14,13 +14,13 @@ public class ButtonPlay extends ScaleButton {
     public ButtonPlay(TextureAtlas atlas, Game game) {
         super(atlas.findRegion("play"));
         this.game = game;
-        setHeightProportion(0.15f);
+        setHeightProportion(0.2f);
     }
 
     @Override
     public void resize(Rect worldBounds) {
-        setLeft(worldBounds.getLeft() + 0.01f);
-        setBottom(worldBounds.getBottom() + 0.00f);
+//        setLeft(worldBounds.getLeft() + 0.01f);
+//        setBottom(worldBounds.getBottom() + 0.00f);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class StarShip extends Sprite {
     private Vector2 buf;
 
     public StarShip(TextureAtlas atlas) {
-        super(atlas.findRegion("StarShip"));
+        super(atlas.findRegion("main_ship"));
         setHeightProportion(0.15f);
         v2 = new Vector2();
         touch1 = new Vector2();
