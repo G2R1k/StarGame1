@@ -24,11 +24,16 @@ public abstract class Ship extends Sprite {
     protected float reloadTimer;
 
     protected int damage;
+    protected int hp;
 
     protected Sound bulletSound;
 
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
+    }
+
+    public Ship(){
+
     }
 
     @Override
