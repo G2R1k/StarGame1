@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pool.BulletPool;
+import ru.geekbrains.pool.ExplosionPool;
 
 public class StarShip extends Ship {
 
@@ -18,9 +19,10 @@ public class StarShip extends Ship {
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
 
-    public StarShip(TextureAtlas atlas, BulletPool bulletPool, Sound bulletSound) {
+    public StarShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Sound bulletSound) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         v1 = new Vector2();
         v0 = new Vector2(0.5f, 0);
@@ -35,6 +37,11 @@ public class StarShip extends Ship {
     @Override
     public void update(float delta) {
         super.update(delta);
+        reloadTimer += delta;
+        if(reloadTimer >= reloadInterval){
+            reloadTimer = 0f;
+            shoot();
+        }
         if(getRight() > worldBounds.getRight()){
             setRight(worldBounds.getRight());
             stop();

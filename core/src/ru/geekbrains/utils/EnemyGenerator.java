@@ -67,7 +67,7 @@ public class EnemyGenerator {
             generateTimer = 0f;
             EnemyShip enemyShip = enemyPool.obtain();
             float typeShip = (float) Math.random();
-            if(typeShip < 0.5f ){
+            if(typeShip < 0.7f ){
             enemyShip.set(
                     enemySmallRegion,
                     enemySmallV,
@@ -79,7 +79,7 @@ public class EnemyGenerator {
                     ENEMY_SMALL_HEIGHT,
                     ENEMY_SMALL_HP
             );
-            } else if(typeShip < 0.8f){
+            } else if(typeShip < 0.9f){
                 enemyShip.set(
                         enemyMiddleRegion,
                         enemyMiddleV,
