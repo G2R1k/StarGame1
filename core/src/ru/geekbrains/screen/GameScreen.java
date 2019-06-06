@@ -9,12 +9,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.List;
+
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pool.BulletPool;
 import ru.geekbrains.pool.EnemyPool;
 import ru.geekbrains.pool.ExplosionPool;
 import ru.geekbrains.sprite.Background;
+import ru.geekbrains.sprite.EnemyShip;
 import ru.geekbrains.sprite.Explosion;
 import ru.geekbrains.sprite.StarShip;
 import ru.geekbrains.sprite.Stars;
@@ -56,8 +59,8 @@ public class GameScreen extends BaseScreen {
         stars = new Stars[STAR_COUNT];
         bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas, explosionSound);
-        enemyPool = new EnemyPool(bulletPool, bulletSound, worldBounds);
-        starShip = new StarShip(atlas, bulletPool, laserSound);
+        enemyPool = new EnemyPool(bulletPool, explosionPool, bulletSound, worldBounds);
+        starShip = new StarShip(atlas, bulletPool, explosionPool, laserSound);
         enemyGenerator = new EnemyGenerator(worldBounds, enemyPool, atlas);
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Stars(atlas);
@@ -67,6 +70,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         update(delta);
+        checkCollision();
         freeAllDestroyedActiveObjects();
         draw();
     }
@@ -75,11 +79,30 @@ public class GameScreen extends BaseScreen {
         for(Stars star : stars) {
             star.update(delta);
         }
-        starShip.update(delta);
+        if(!starShip.isDestroyed()){
+            starShip.update(delta);
+        }
         bulletPool.updateActiveSprites(delta);
         explosionPool.updateActiveSprites(delta);
         enemyPool.updateActiveSprites(delta);
         enemyGenerator.generate(delta);
+    }
+
+    private void checkCollision(){
+        if(starShip.isDestroyed()){
+            return;
+        }
+        List<EnemyShip> enemyShipList = enemyPool.getActiveObjects();
+        for(EnemyShip enemyShip : enemyShipList){
+            if(enemyShip.isDestroyed()){
+                continue;
+            }
+            float miniDist = enemyShip.getHalfWidth() + starShip.getHalfWidth();
+            if(enemyShip.pos.dst(starShip.pos) < miniDist){
+                enemyShip.destroy();
+                starShip.destroy();
+            }
+        }
     }
 
     private void freeAllDestroyedActiveObjects(){
@@ -96,7 +119,9 @@ public class GameScreen extends BaseScreen {
         for(Stars star : stars) {
             star.draw(batch);
         }
-        starShip.draw(batch);
+        if(!starShip.isDestroyed()){
+            starShip.draw(batch);
+        }
         bulletPool.drawActiveSprites(batch);
         explosionPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
