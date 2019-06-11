@@ -30,6 +30,10 @@ public abstract class Ship extends Sprite {
 
     protected Sound bulletSound;
 
+    private float damageAnimateInterval = 0.1f;
+    private float damageAnimateTimer = damageAnimateInterval;
+
+
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
     }
@@ -42,6 +46,10 @@ public abstract class Ship extends Sprite {
     public void update(float delta) {
         super.update(delta);
         pos.mulAdd(v1, delta);
+        damageAnimateTimer += delta;
+        if(damageAnimateTimer >= damageAnimateInterval){
+            frame = 0;
+        }
     }
 
     @Override
@@ -56,8 +64,17 @@ public abstract class Ship extends Sprite {
         boom();
     }
 
+    public void damage(int damage){
+        hp -= damage;
+        if (hp <= 0){
+            destroy();
+        }
+        frame = 1;
+        damageAnimateTimer = 0f;
+    }
+
     protected void shoot(){
-        bulletSound.play();
+        bulletSound.play(0.3f);
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, damage);
     }

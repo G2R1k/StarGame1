@@ -18,7 +18,9 @@ public class EnemyShip extends Ship {
 
     private Vector2 descnetV = new Vector2(0, -0.15f);
 
-    public EnemyShip(BulletPool bulletPool, ExplosionPool explosionPool, Sound bulletSound, Rect worldBounds){
+    private StarShip starShip;
+
+    public EnemyShip(BulletPool bulletPool, ExplosionPool explosionPool, Sound bulletSound, Rect worldBounds, StarShip starShip){
         this.bulletPool = bulletPool;
         this.explosionPool = explosionPool;
         this.bulletSound = bulletSound;
@@ -26,6 +28,7 @@ public class EnemyShip extends Ship {
         this.v1 = new Vector2();
         this.v0 = new Vector2();
         this.bulletV = new Vector2();
+        this.starShip = starShip;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class EnemyShip extends Ship {
                 }
                 if(getBottom() < worldBounds.getBottom()){
                     destroy();
+                    starShip.damage(damage);
                 }
                 break;
         }
@@ -73,5 +77,14 @@ public class EnemyShip extends Ship {
         this.hp = hp;
         this.v1.set(descnetV);
         this.state = State.DESCENT;
+    }
+
+    public boolean isBulletCollision(Rect bullet){
+        return !(
+                bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > getTop()
+                || bullet.getTop() < pos.y
+                );
     }
 }
