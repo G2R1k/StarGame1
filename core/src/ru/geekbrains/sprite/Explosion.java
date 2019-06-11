@@ -21,7 +21,7 @@ public class Explosion extends Sprite {
     public void set(float height, Vector2 pos){
         this.pos.set(pos);
         setHeightProportion(height);
-        explosionSound.play();
+        explosionSound.play(0.2f);
     }
 
     @Override
