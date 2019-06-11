@@ -31,7 +31,7 @@ public class StarShip extends Ship {
         this.bulletHeight = 0.01f;
         this.damage = 1;
         this.bulletSound = bulletSound;
-        this.hp = 1;
+        this.hp = 50;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class StarShip extends Ship {
     }
 
     public void startNewGame(){
-        this.hp = 1;
+        this.hp = 50;
         this.pos.x = worldBounds.pos.x;
         flushDestroyed();
     }
@@ -149,6 +149,15 @@ public class StarShip extends Ship {
             || bullet.getBottom() > pos.y
                 || bullet.getTop() < getBottom()
         );
+    }
+
+    public void destroy(){
+        super.destroy();
+        pressLeft = false;
+        pressRight = false;
+        leftPointer = INVALID_POINTER;
+        rightPointer = INVALID_POINTER;
+        stop();
     }
 
     private void moveRight(){
